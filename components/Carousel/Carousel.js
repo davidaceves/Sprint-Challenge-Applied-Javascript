@@ -1,13 +1,16 @@
 class Carousel {
     constructor(carouselElement){
         this.currentIndex = 0;
+        this.counter = 0;
+        this.reset = false;
         this.carouselElement = carouselElement;
         this.leftButton = document.querySelector('.left-button');
         this.rightButton = document.querySelector('.right-button');
         this.images = document.querySelectorAll('.carousel img');
-        this.currentSlide = this.images[this.currentIndex];
+        
 
-        this.currentSlide.style.display = 'flex';
+        this.firstSlide = this.images[0];
+        this.firstSlide.style.display = 'flex';
 
         this.rightButton.addEventListener('click', () => {
             this.playForward();
@@ -19,20 +22,29 @@ class Carousel {
     }
 
     playForward() {
-        this.images[this.currentIndex].style.display = 'none';
 
-        this.images[this.currentIndex + 1].style.display = 'flex';
-
-        this.currentIndex += 1;
-
-        if (this.currentIndex === 3) {
+        if (this.counter === this.images.length - 1) {
             this.currentIndex = 0;
-            this.images[this.currentIndex].style.display = 'flex';
+            this.counter = 0;
+            this.firstSlide.style.display = 'flex';
+            this.images[this.images.length - 1].style.display = 'none';
+        } else {
+            this.images[this.currentIndex].style.display = 'none';
+            this.images[this.currentIndex + 1].style.display = 'flex';
+            this.currentIndex += 1;
+            this.counter += 1;
         }
+
     }
 
     playBackward() {
-        this.images[3].style.display = 'flex';
+        this.currentIndex = 3;
+
+        this.images[this.currentIndex].style.display = 'none';
+
+        this.images[this.currentIndex - 1].style.display = 'flex';
+
+        this.currentIndex -= 1;
     }
 }
 
